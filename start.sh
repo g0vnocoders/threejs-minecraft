@@ -1,2 +1,2 @@
-python Flastornado.py  local &
-python onlineserver.py local &
+python Flastornado.py   &
+python onlineserver.py  &

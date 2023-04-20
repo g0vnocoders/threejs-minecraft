@@ -17,7 +17,7 @@ myserver = {
     "name": "Official server #1",
     # your global server IP address or domain, you must change it
     # also wss means secured server. If you dont have cert files - use letsencrypt to create it. not secured websockets won't work!
-    "ip": "wss://site9373r.dns-cloud.net:25555",
+    "ip": "wss://sudohub.dev:25555",
     # your server port to bind
     "srvport": 25555,
     # player limit
@@ -36,7 +36,7 @@ async def addMyServer():
     await asyncio.sleep(2)
     requests.post(
         "http://127.0.0.1/newserver" if "local" in sys.argv
-        else "https://site9373r.dns-cloud.net/newserver", data=myserver)
+        else "https://sudohub.dev/newserver", data=myserver)
 
 
 class GameHandler():
@@ -165,11 +165,11 @@ else:
     elif sys.platform == 'linux':
         http_server = HTTPServer(make_app(), ssl_options={
             # path to your SSL files
-            "certfile": os.path.join("/home/pi/Документы/PEM/certificate.crt"),
-            "keyfile": os.path.join("/home/pi/Документы/PEM/private.key"),
+            "certfile": os.path.join("/etc/letsencrypt/live/sudohub.dev/fullchain.pem"),
+            "keyfile": os.path.join("/etc/letsencrypt/live/sudohub.dev/privkey.pem"),
         })
         http_server.bind(myserver["srvport"])
-        http_server.start(0)
+        http_server.start(num_processes=1)
 
 IOLoop.current().add_callback(addMyServer)
 IOLoop.current().start()

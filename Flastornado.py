@@ -19,10 +19,10 @@ if "local" in sys.argv:
 else:
     http_server = HTTPServer(WSGIContainer(app), ssl_options={
         # path to your SSL files
-        "certfile": os.path.join("/home/pi/Документы/PEM/certificate.crt"),
-        "keyfile": os.path.join("/home/pi/Документы/PEM/private.key"),
+        "certfile": os.path.join("/etc/letsencrypt/live/sudohub.dev/fullchain.pem"),
+        "keyfile": os.path.join("/etc/letsencrypt/live/sudohub.dev/privkey.pem"),
     })
     http_server.bind(443)
-    http_server.start(0)
+    http_server.start(num_processes=1)
 
 IOLoop.instance().start()
